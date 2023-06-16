@@ -2,10 +2,18 @@ const InfoWeb = require("../models/infoWebModel");
 const asyncHandler = require("express-async-handler");
 const cloudinary = require("../utils/cloudinarys");
 
+const creteHome = asyncHandler(async (req, res) => {
+  try {
+    const createinfo = await InfoWeb.create(req.body);
+    res.json({ status: "Create Success", createinfo });
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 const updateInfoWeb = asyncHandler(async (req, res) => {
   const info = await InfoWeb.find();
   try {
-    
     if (req.file != undefined) {
       cloudinary.uploader.destroy(info[0].logo.public_id, function (result) {
         console.log(result);
@@ -47,4 +55,4 @@ const getInfo = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { updateInfoWeb, getInfo };
+module.exports = { updateInfoWeb, getInfo, creteHome };

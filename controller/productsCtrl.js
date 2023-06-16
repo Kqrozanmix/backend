@@ -15,7 +15,7 @@ const createProducts = asyncHandler(async (req, res) => {
       );
 
       let imageResponses = await Promise.all(multiplePicturePromise);
-    
+
       const imageDetails = [];
       imageResponses.map((item) => {
         const details = {

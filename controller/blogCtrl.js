@@ -33,12 +33,12 @@ const createBlog = asyncHandler(async (req, res) => {
 
 const updateBlog = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const getBlog = await Blog.findById({ _id: id });
+  const getBlog = await Blog.findOne({ _id: id });
   validateMongoDbId(id);
   try {
     if (req.file != undefined) {
       cloudinary.uploader.destroy(
-        getBlog[0].imageThumbnail.public_id,
+        getBlog?.imageThumbnail?.public_id,
         function (result) {
           console.log(result);
         }
@@ -236,9 +236,9 @@ const uploadImages = asyncHandler(async (req, res) => {
 const searchCategory = async (req, res) => {
   const { keyword } = req.query;
   try {
-    const blogs = await Blog.find(
-      { title: { $regex: keyword, $options: "i" } }
-    );
+    const blogs = await Blog.find({
+      title: { $regex: keyword, $options: "i" },
+    });
     res.json(blogs);
   } catch (error) {
     res.status(500).json({ message: error.message });
