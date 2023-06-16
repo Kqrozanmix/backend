@@ -42,7 +42,7 @@ var userSchema = new mongoose.Schema(
     },
     isBlocked: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     cart: {
       type: Array,
